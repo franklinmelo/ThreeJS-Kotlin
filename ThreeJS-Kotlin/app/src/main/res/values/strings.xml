@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">WebView Kotlin</string>
+    <string name="email_field">Email</string>
+    <string name="pass_field">Senha</string>
+    <string name="login_button">Entrar</string>
+    <string name="logout_button">Sair</string>
+</resources>
