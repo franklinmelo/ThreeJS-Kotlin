@@ -8,7 +8,6 @@ import android.webkit.WebChromeClient
 import android.webkit.WebViewClient
 import android.widget.Button
 import android.widget.EditText
-import com.example.threejskotlin.R
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 
