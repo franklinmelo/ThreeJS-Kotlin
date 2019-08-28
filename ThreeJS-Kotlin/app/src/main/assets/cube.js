@@ -20,7 +20,6 @@ var cubeMaterials = [
  var geometry = new THREE.SphereGeometry( 3, 32, 32 );
  var material = new THREE.MeshBasicMaterial( {color: 0xff00ff, wireframe: true} );
  var sphere = new THREE.Mesh( geometry, material );
- scene.add( sphere );
 
  cube.position.set(4,0,0)
  sphere.position.set(-10,0,0)
@@ -44,5 +43,29 @@ var cubeMaterials = [
 
      renderer.render( scene, camera );
  };
-
 animate();
+
+function renderText(text){
+    var loader = new THREE.FontLoader();
+    loader.load( 'https://cdn.rawgit.com/mrdoob/three.js/master/examples/fonts/helvetiker_regular.typeface.json', function ( font ) {
+
+                var geometry = new THREE.TextGeometry( text, {
+                                                      font: font,
+                                                      size: 1,
+                                                      height: 0.1,
+                                                      curveSegments: 10,
+                                                      bevelSize: 0,
+                                                      bevelOffset: 0,
+                                                      bevelSegments: 0
+                                                      } );
+                var material = new THREE.MeshBasicMaterial({ color: 0xff0000 });
+                var cube = new THREE.Mesh(geometry, material);
+                if(group.children[2] != null){
+                    group.children.pop()
+                }
+                group.add(cube)
+                group.children[2].position.set(-6,4,0)
+                scene.add(group)
+
+                } );
+}
