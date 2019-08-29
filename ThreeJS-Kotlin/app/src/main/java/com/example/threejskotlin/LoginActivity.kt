@@ -6,7 +6,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
-import com.example.threejskotlin.R
+import android.widget.ProgressBar
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.AuthResult
@@ -20,29 +20,35 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
-        var btnLogin = findViewById<Button>(R.id.btnLogin)
-        var editTextEmail = findViewById<EditText>(R.id.editTextEmail)
-        var editTextPassword = findViewById<EditText>(R.id.editTextPassword)
+        val btnLogin = findViewById<Button>(R.id.btnLogin)
+        val editTextEmail = findViewById<EditText>(R.id.editTextEmail)
+        val editTextPassword = findViewById<EditText>(R.id.editTextPassword)
+        val progressBar = findViewById<ProgressBar>(R.id.progressBar)
+        progressBar.visibility = View.GONE
+
         btnLogin.setOnClickListener {view ->
-            var user = editTextEmail.text.toString()
-            var pass = editTextPassword.text.toString()
+            val user = editTextEmail.text.toString()
+            val pass = editTextPassword.text.toString()
             if(user.isEmpty() || pass.isEmpty()){
                 showMessage(view, "Preencha todos dos campos")
             }else{
-                signIn(view,user, pass)
+                progressBar.visibility = View.VISIBLE
+                signIn(view,user, pass, progressBar)
             }
 
         }
     }
 
-    fun signIn(view: View, email: String, password: String){
+    fun signIn(view: View, email: String, password: String, progressBar: ProgressBar){
         fbAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(this, OnCompleteListener<AuthResult> {respost ->
             if(respost.isSuccessful){
-                var intent = Intent(this, RenderActivity::class.java)
+                val intent = Intent(this, RenderActivity::class.java)
                 intent.putExtra("id", fbAuth.currentUser?.email)
                 startActivity(intent)
+                progressBar.visibility = View.GONE
             }
             else{
+                progressBar.visibility = View.GONE
                 showMessage(view, "Login ou senha invalodo!")
             }
         })
